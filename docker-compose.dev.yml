@@ -1,0 +1,44 @@
+version: "3.9"
+
+services:
+  load-balancer:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      - DEV_BFI_NATIONAL_ARCHIVE_VIEWER_PROTOCOL=http
+      - DEV_BFI_NATIONAL_ARCHIVE_VIEWER_HOST=bfinationalarchiveviewer-dev
+      - DEV_BFI_NATIONAL_ARCHIVE_VIEWER_PORT=80
+      - BFI_NATIONAL_ARCHIVE_VIEWER_PROTOCOL=http
+      - BFI_NATIONAL_ARCHIVE_VIEWER_HOST=bfinationalarchiveviewer
+      - BFI_NATIONAL_ARCHIVE_VIEWER_PORT=80
+    secrets:
+      - source: bfi_iiif_root_ca_crt
+        target: ssl/bfi-iiif-root-ca.crt
+      - source: bfinationalarchiveviewer-dev_bfi_org_uk_ssl_key
+        target: ssl/bfinationalarchiveviewer-dev.bfi.org.uk.key
+      - source: bfinationalarchiveviewer-dev_bfi_org_uk_ssl_crt
+        target: ssl/bfinationalarchiveviewer-dev.bfi.org.uk.crt
+      - source: bfinationalarchiveviewer_bfi_org_uk_ssl_key
+        target: ssl/bfinationalarchiveviewer.bfi.org.uk.key
+      - source: bfinationalarchiveviewer_bfi_org_uk_ssl_crt
+        target: ssl/bfinationalarchiveviewer.bfi.org.uk.crt
+  bfinationalarchiveviewer-dev:
+    image: karthequian/helloworld:black
+  bfinationalarchiveviewer:
+    image: karthequian/helloworld:blue
+
+secrets:
+  bfi_iiif_root_ca_crt:
+    file: configs/run/secrets/ssl/bfi-iiif-root-ca.crt
+  bfinationalarchiveviewer-dev_bfi_org_uk_ssl_key:
+    file: configs/run/secrets/ssl/bfinationalarchiveviewer-dev.bfi.org.uk.key
+  bfinationalarchiveviewer-dev_bfi_org_uk_ssl_crt:
+    file: configs/run/secrets/ssl/bfinationalarchiveviewer-dev.bfi.org.uk.crt
+  bfinationalarchiveviewer_bfi_org_uk_ssl_key:
+    file: configs/run/secrets/ssl/bfinationalarchiveviewer.bfi.org.uk.key
+  bfinationalarchiveviewer_bfi_org_uk_ssl_crt:
+    file: configs/run/secrets/ssl/bfinationalarchiveviewer.bfi.org.uk.crt
