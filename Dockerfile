@@ -1,5 +1,6 @@
 FROM nginx:1.19.7
 LABEL maintainer="Daniel Grant <daniel.grant@digirati.com>"
+LABEL org.opencontainers.image.source=https://github.com/bfidatadigipres/bfi-iiif-load-balancer
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
