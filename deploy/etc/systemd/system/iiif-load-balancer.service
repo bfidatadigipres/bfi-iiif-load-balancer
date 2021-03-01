@@ -9,8 +9,8 @@ RemainAfterExit=yes
 StandardError=null
 StandardOutput=null
 WorkingDirectory=/opt/bfi/iiif-load-balancer
-ExecStart=/usr/bin/docker-compose --file /opt/bfi/iiif-load-balancer/docker-compose.yml --env-file /opt/bfi/iiif-load-balancer/config.env up -d --remove-orphans
-ExecStop=/usr/bin/docker-compose --file /opt/bfi/iiif-load-balancer/docker-compose.yml --env-file /opt/bfi/iiif-load-balancer/config.env down
+ExecStart=/usr/bin/docker-compose --file /opt/bfi/iiif-load-balancer/docker-compose.yml --env-file /etc/opt/bfi/iiif-load-balancer/config.env up -d --remove-orphans
+ExecStop=/usr/bin/docker-compose --file /opt/bfi/iiif-load-balancer/docker-compose.yml --env-file /etc/opt/bfi/iiif-load-balancer/config.env down
 
 [Install]
 WantedBy=multi-user.target
