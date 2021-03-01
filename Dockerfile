@@ -4,9 +4,9 @@ LABEL org.opencontainers.image.source=https://github.com/bfidatadigipres/bfi-iii
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-RUN mkdir -p /usr/lib/bfi
+RUN mkdir -p /etc/bfi/iiif-load-balancer
 
-COPY configs/usr/local/bin/entrypoint.sh /usr/local/bin
-COPY configs/usr/lib/bfi/server_proxy.conf /usr/lib/bfi
+COPY docker/etc/bfi/iiif-load-balancer/server_proxy.conf /etc/bfi/iiif-load-balancer
+COPY docker/usr/local/bin/entrypoint.sh /usr/local/bin
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

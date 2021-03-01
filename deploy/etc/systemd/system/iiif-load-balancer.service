@@ -1,0 +1,16 @@
+# /etc/systemd/system/iiif-load-balancer.service
+[Unit]
+Description=IIIF Load Balancer Service
+After=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+StandardError=null
+StandardOutput=null
+WorkingDirectory=/opt/bfi/iiif-load-balancer
+ExecStart=/usr/bin/docker-compose --file /opt/bfi/iiif-load-balancer/docker-compose.yml --env-file /opt/bfi/iiif-load-balancer/config.env up -d --remove-orphans
+ExecStop=/usr/bin/docker-compose --file /opt/bfi/iiif-load-balancer/docker-compose.yml --env-file /opt/bfi/iiif-load-balancer/config.env down
+
+[Install]
+WantedBy=multi-user.target

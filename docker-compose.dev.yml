@@ -10,11 +10,11 @@ services:
       - 81:81
       - 443:443
     environment:
-      - DB_MYSQL_HOST=mysql
-      - DB_MYSQL_PORT=3306
-      - DB_MYSQL_USER=bfi
-      - DB_MYSQL_PASSWORD=password
       - DB_MYSQL_NAME=nginxproxymanager
+      - DB_MYSQL_HOST=mysql
+      - DB_MYSQL_PORT=3306 # Required, even though it's the default MySQL port.
+      - DB_MYSQL_USER=nginxproxymanager
+      - DB_MYSQL_PASSWORD=password
     volumes:
       - nginxproxymanager_data:/data
       - nginxproxymanager_letsencrypt:/etc/letsencrypt
@@ -26,10 +26,10 @@ services:
     ports:
       - 3306:3306
     environment:
-      - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=nginxproxymanager
-      - MYSQL_USER=bfi
+      - MYSQL_USER=nginxproxymanager
       - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=password
     volumes:
     - mysql_data:/var/lib/mysql
   backend_1:

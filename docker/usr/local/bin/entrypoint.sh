@@ -27,12 +27,12 @@ show_motd() {
 
 copy_configs() {
   # /data/nginx/custom/server_proxy.conf
-  mkdir -p "/data/nginx/custom"
-  ln -s "/usr/lib/bfi/server_proxy.conf" "/data/nginx/custom"
+  mkdir -pv "/data/nginx/custom"
+  ln -sfv "/etc/bfi/iiif-load-balancer/server_proxy.conf" "/data/nginx/custom"
 
   # /data/nginx/custom/ssl/bfi-iiif-root-ca.crt
-  mkdir -p "/data/nginx/custom/ssl"
-  ln -s "/run/secrets/ssl/bfi-iiif-root-ca.crt" "/data/nginx/custom/ssl"
+  mkdir -pv "/data/nginx/custom/ssl"
+  ln -sfv "/run/secrets/ssl/bfi-iiif-root-ca.crt" "/data/nginx/custom/ssl"
 }
 
 run_nginx() {
