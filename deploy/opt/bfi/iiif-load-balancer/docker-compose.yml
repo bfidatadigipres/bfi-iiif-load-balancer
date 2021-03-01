@@ -22,7 +22,7 @@ services:
       - source: bfi_iiif_root_ca_crt
         target: ssl/bfi-iiif-root-ca.crt
   mysql:
-    image: mysql:5.7.33
+    image: mysql:${MYSQL_IMAGE_TAG}
     environment:
       - MYSQL_DATABASE=nginxproxymanager
       - MYSQL_USER=nginxproxymanager
