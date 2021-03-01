@@ -18,8 +18,7 @@ The repository is split into the following components:
 
 - [`Dockerfile`](Dockerfile) and [`docker/`](docker/)
   - Using the NGINX Proxy Manager as the base image, this `Dockerfile`
-    introduces a number of small but significant
-    customisations.
+    introduces a number of small but significant customisations.
   - Specifically, it provides an NGINX configuration
     file([`server_proxy.conf`](docker/etc/bfi/iiif-load-balancer/server_proxy.conf))
     which introduces BFI's IIIF root certificate authority (used for
@@ -34,18 +33,18 @@ The repository is split into the following components:
       file.
     - Certificate signing requests, keys and certificates for backend
       services for which the load balancer proxies requests.
-- [`deploy`](deploy/`)
+- [`deploy`](deploy/)
   - Contains the folder structure and configuration files required to
     deploy the load balancer. Specifically:
-    - [`etc/opt/bfi/iiif-load-balancer`](deploy/etc/opt/bfi/iiif-load-balancer):
+    - [`/etc/opt/bfi/iiif-load-balancer`](deploy/etc/opt/bfi/iiif-load-balancer):
       contains configuration files and assets used by the load balancer.
-    - [`etc/systemd/system/iiif-load-balancer.service`](deploy/etc/systemd/system/iiif-load-balancer.service):
+    - [`/etc/systemd/system/iiif-load-balancer.service`](deploy/etc/systemd/system/iiif-load-balancer.service):
       the systemd unit used for starting and stopping the underlying
       NGINX Proxy Manager instance.
-    - [`opt/bfi/iiif-load-balancer`](deploy/opt/bfi/iiif-load-balancer):
+    - [`/opt/bfi/iiif-load-balancer`](deploy/opt/bfi/iiif-load-balancer):
       the Docker Compose manifest, defining the load balancer
       application, dependencies and relationships therein.
-    - [`var/opt/bfi/iiif-load-balancer/mounts`](deploy/opt/bfi/iiif-load-balancer/mounts):
+    - [`/var/opt/bfi/iiif-load-balancer/mounts`](deploy/var/opt/bfi/iiif-load-balancer/mounts):
       directory where the various mounted volumes used by the containers
       are located.
 
@@ -64,8 +63,8 @@ git secret reveal
 ```
 
 To decrypt secrets, you must first be added to the keyring by an
-existing user (assuming a key for `some.user@example.com` already
-exists in your local GPG keyring):
+existing user (assuming a key for `some.user@example.com` already exists
+in your local GPG keyring):
 
 ```bash
 git secret reveal
@@ -108,12 +107,12 @@ The manifest additionally deploys two instances of
 [`karthequian/helloworld`](https://hub.docker.com/r/karthequian/helloworld),
 which can be used as test proxy targets.
 
-##  Versioning
+## Versioning
 
 We use SemVer for versioning. For the versions available, see the [tags
 on this repository](https://github.com/bfidatadigipres/bfi-iiif-load-balancer/tags).
 
-##  License
+## License
 
 This project is licensed under the MIT License - see the
 [`LICENSE`](LICENSE) file for details
