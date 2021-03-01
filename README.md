@@ -116,3 +116,66 @@ on this repository](https://github.com/bfidatadigipres/bfi-iiif-load-balancer/ta
 
 This project is licensed under the MIT License - see the
 [`LICENSE`](LICENSE) file for details
+
+## Deployment
+
+### Prerequisites
+
+The application requires Docker and Docker Compose. It is recommended
+that these are installed from the official Docker repositories:
+
+- https://docs.docker.com/engine/install/
+- https://docs.docker.com/compose/install/
+
+The application deployment should mirror the contents of the
+[`deploy/`](deploy/) directory. Start by creating the necessary
+directories:
+
+### Deploy Configuration
+
+```bash
+sudo -i
+mkdir -p /etc/opt/bfi/iiif-load-balancer/secrets
+mkdir -p /etc/opt/bfi/iiif-load-balancer/ssl
+mkdir -p /opt/bfi/iiif-load-balancer
+mkdir -p /var/opt/bfi/iiif-load-balancer/mounts
+chmod 775 /var/opt/bfi/iiif-load-balancer/mounts
+```
+
+Create the MySQL database passwords:
+
+```bash
+cat /dev/urandom | tr -dc '_A-Z-a-z-0-9' | head -c${1:-32} > /etc/opt/bfi/iiif-load-balancer/secrets/mysql_password
+cat /dev/urandom | tr -dc '_A-Z-a-z-0-9' | head -c${1:-32} > /etc/opt/bfi/iiif-load-balancer/secrets/mysql_root_password
+```
+
+Deploy BFI's IIIF root certificate authority:
+
+```bash
+cp bfi-iiif-root-ca.crt /etc/opt/bfi/iiif-load-balancer/ssl
+```
+
+Update
+[`/etc/opt/bfi/iiif-load-balancer/config.env`](deploy/etc/opt/bfi/iiif-load-balancer/config.env)
+to use the desired image tags:
+
+```text
+LOAD_BALANCER_IMAGE_TAG=1.0.0
+MYSQL_IMAGE_TAG=5.7.33
+```
+
+### Start Load Balancer
+
+Enable the systemd unit to start at boot:
+
+```bash
+systemctl enable iiif-load-balancer
+```
+
+Start the load balancer:
+
+```bash
+systemctl start iiif-load-balancer
+```
+
+The NGINX Proxy Manager instance can now be accessed on port `81`.
