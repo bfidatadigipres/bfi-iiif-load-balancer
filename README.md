@@ -107,16 +107,6 @@ The manifest additionally deploys two instances of
 [`karthequian/helloworld`](https://hub.docker.com/r/karthequian/helloworld),
 which can be used as test proxy targets.
 
-## Versioning
-
-We use SemVer for versioning. For the versions available, see the [tags
-on this repository](https://github.com/bfidatadigipres/bfi-iiif-load-balancer/tags).
-
-## License
-
-This project is licensed under the MIT License - see the
-[`LICENSE`](LICENSE) file for details
-
 ## Deployment
 
 ### Prerequisites
@@ -179,3 +169,13 @@ systemctl start iiif-load-balancer
 ```
 
 The NGINX Proxy Manager instance can now be accessed on port `81`.
+
+## Versioning
+
+We use SemVer for versioning. For the versions available, see the [tags
+on this repository](https://github.com/bfidatadigipres/bfi-iiif-load-balancer/tags).
+
+## License
+
+This project is licensed under the MIT License - see the
+[`LICENSE`](LICENSE) file for details
