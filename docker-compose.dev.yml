@@ -1,44 +1,47 @@
 version: "3.9"
 
 services:
-  load-balancer:
+  nginxproxymanager:
     build:
       dockerfile: Dockerfile
       context: .
     ports:
       - 80:80
+      - 81:81
       - 443:443
     environment:
-      - DEV_BFI_NATIONAL_ARCHIVE_VIEWER_PROTOCOL=http
-      - DEV_BFI_NATIONAL_ARCHIVE_VIEWER_HOST=bfinationalarchiveviewer-dev
-      - DEV_BFI_NATIONAL_ARCHIVE_VIEWER_PORT=80
-      - BFI_NATIONAL_ARCHIVE_VIEWER_PROTOCOL=http
-      - BFI_NATIONAL_ARCHIVE_VIEWER_HOST=bfinationalarchiveviewer
-      - BFI_NATIONAL_ARCHIVE_VIEWER_PORT=80
+      - DB_MYSQL_HOST=mysql
+      - DB_MYSQL_PORT=3306
+      - DB_MYSQL_USER=bfi
+      - DB_MYSQL_PASSWORD=password
+      - DB_MYSQL_NAME=nginxproxymanager
+    volumes:
+      - nginxproxymanager_data:/data
+      - nginxproxymanager_letsencrypt:/etc/letsencrypt
     secrets:
       - source: bfi_iiif_root_ca_crt
         target: ssl/bfi-iiif-root-ca.crt
-      - source: bfinationalarchiveviewer-dev_bfi_org_uk_ssl_key
-        target: ssl/bfinationalarchiveviewer-dev.bfi.org.uk.key
-      - source: bfinationalarchiveviewer-dev_bfi_org_uk_ssl_crt
-        target: ssl/bfinationalarchiveviewer-dev.bfi.org.uk.crt
-      - source: bfinationalarchiveviewer_bfi_org_uk_ssl_key
-        target: ssl/bfinationalarchiveviewer.bfi.org.uk.key
-      - source: bfinationalarchiveviewer_bfi_org_uk_ssl_crt
-        target: ssl/bfinationalarchiveviewer.bfi.org.uk.crt
-  bfinationalarchiveviewer-dev:
+  mysql:
+    image: mysql:5.7.33
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=nginxproxymanager
+      - MYSQL_USER=bfi
+      - MYSQL_PASSWORD=password
+    volumes:
+    - mysql_data:/var/lib/mysql
+  backend_1:
     image: karthequian/helloworld:black
-  bfinationalarchiveviewer:
+  backend_2:
     image: karthequian/helloworld:blue
+
+volumes:
+  nginxproxymanager_data:
+  nginxproxymanager_letsencrypt:
+  mysql_data:
 
 secrets:
   bfi_iiif_root_ca_crt:
-    file: configs/run/secrets/ssl/bfi-iiif-root-ca.crt
-  bfinationalarchiveviewer-dev_bfi_org_uk_ssl_key:
-    file: configs/run/secrets/ssl/bfinationalarchiveviewer-dev.bfi.org.uk.key
-  bfinationalarchiveviewer-dev_bfi_org_uk_ssl_crt:
-    file: configs/run/secrets/ssl/bfinationalarchiveviewer-dev.bfi.org.uk.crt
-  bfinationalarchiveviewer_bfi_org_uk_ssl_key:
-    file: configs/run/secrets/ssl/bfinationalarchiveviewer.bfi.org.uk.key
-  bfinationalarchiveviewer_bfi_org_uk_ssl_crt:
-    file: configs/run/secrets/ssl/bfinationalarchiveviewer.bfi.org.uk.crt
+    file: ssl/bfi-iiif-root-ca.crt

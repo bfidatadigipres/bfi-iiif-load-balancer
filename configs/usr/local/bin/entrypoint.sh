@@ -1,16 +1,16 @@
 #!/bin/bash
-########################################################
+#############################################################
 # Script name : entrypoint
-# Description : Entrypoint for NGINX container.
+# Description : Entrypoint for NGINX Proxy Manager container.
 # Author      : Daniel Grant <daniel.grant@digirati.com>
-########################################################
+#############################################################
 
 set -o errexit
 
 main() {
   show_motd
-  prepare_conf
-  run_nginx "$@"
+  copy_configs
+  run_nginx
 }
 
 log() {
@@ -21,26 +21,24 @@ log_info() {
   log "INFO" "${1}"
 }
 
-render_template() {
-  local target=${1}
-  local vars=${2}
-  log_info "Rendering template '${target}'..."
-  envsubst "${vars}" < "${target}" > "${target}.rendered" && rm "${target}" && mv "${target}.rendered" "${target}"
-}
-
 show_motd() {
-  log_info "Starting NGINX..."
+  log_info "Starting BFI IIIF Load Balancer..."
 }
 
-prepare_conf() {
-  render_template "/etc/nginx/sites-available/bfinationalarchiveviewer-dev.bfi.org.uk.conf" "\${DEV_BFI_NATIONAL_ARCHIVE_VIEWER_PROTOCOL} \${DEV_BFI_NATIONAL_ARCHIVE_VIEWER_HOST} \${DEV_BFI_NATIONAL_ARCHIVE_VIEWER_PORT}"
-  render_template "/etc/nginx/sites-available/bfinationalarchiveviewer.bfi.org.uk.conf" "\${BFI_NATIONAL_ARCHIVE_VIEWER_PROTOCOL} \${BFI_NATIONAL_ARCHIVE_VIEWER_HOST} \${BFI_NATIONAL_ARCHIVE_VIEWER_PORT}"
+copy_configs() {
+  # /data/nginx/custom/server_proxy.conf
+  mkdir -p "/data/nginx/custom"
+  ln -s "/usr/lib/bfi/server_proxy.conf" "/data/nginx/custom"
+
+  # /data/nginx/custom/ssl/bfi-iiif-root-ca.crt
+  mkdir -p "/data/nginx/custom/ssl"
+  ln -s "/run/secrets/ssl/bfi-iiif-root-ca.crt" "/data/nginx/custom/ssl"
 }
 
 run_nginx() {
-  log_info "Executing \"$*\"..."
+  log_info "Executing \"/init\"..."
   set -e
-  exec "$@"
+  exec "/init"
 }
 
-main "$@"
+main
