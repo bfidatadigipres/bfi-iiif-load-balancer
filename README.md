@@ -154,6 +154,18 @@ LOAD_BALANCER_IMAGE_TAG=1.0.0
 MYSQL_IMAGE_TAG=5.7.33
 ```
 
+Add the Docker Compose manfiest:
+
+```bash
+cp docker-compose.yml /opt/bfi/iiif-load-balancer
+```
+
+Add the systemd unit:
+
+```bash
+cp iiif-load-balancer.service /etc/systemd/system
+```
+
 ### Start Load Balancer
 
 Enable the systemd unit to start at boot:
