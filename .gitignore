@@ -8,14 +8,6 @@
 
 # Secrets
 ssl/bfi-iiif-root-ca.crt
-ssl/bfi-iiif-root-ca.key
-ssl/bfi-iiif-root-ca.srl
-ssl/bfinationalarchiveviewer-dev.bfi.org.uk.key
-ssl/bfinationalarchiveviewer-dev.bfi.org.uk.csr
-ssl/bfinationalarchiveviewer-dev.bfi.org.uk.crt
-ssl/bfinationalarchiveviewer.bfi.org.uk.crt
-ssl/bfinationalarchiveviewer.bfi.org.uk.csr
-ssl/bfinationalarchiveviewer.bfi.org.uk.key
 
 # Created by https://www.toptal.com/developers/gitignore/api/jetbrains
 # Edit at https://www.toptal.com/developers/gitignore?templates=jetbrains
