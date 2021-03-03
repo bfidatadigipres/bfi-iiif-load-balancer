@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  nginxproxymanager:
+    image: ghcr.io/bfidatadigipres/bfi-iiif-load-balancer:${LOAD_BALANCER_IMAGE_TAG}
+    ports:
+      - 80:80
+      - 81:81
+      - 443:443
+    environment:
+      - DB_MYSQL_NAME=nginxproxymanager
+      - DB_MYSQL_HOST=mysql
+      - DB_MYSQL_PORT=3306 # Required, even though it's the default MySQL port.
+      - DB_MYSQL_USER=nginxproxymanager
+      - DB_MYSQL_PASSWORD__FILE=/run/secrets/passwords/mysql # Double underscore is intentional.
+    volumes:
+      - /var/opt/bfi/iiif-load-balancer/mounts/load_balancer_data:/data
+      - /var/opt/bfi/iiif-load-balancer/mounts/load_balancer_letsencrypt:/etc/letsencrypt
+    secrets:
+      - source: mysql_password
+        target: passwords/mysql
+      - source: bfi_iiif_root_ca_crt
+        target: ssl/bfi-iiif-root-ca.crt
+  mysql:
+    image: mysql:${MYSQL_IMAGE_TAG}
+    environment:
+      - MYSQL_DATABASE=nginxproxymanager
+      - MYSQL_USER=nginxproxymanager
+      - MYSQL_PASSWORD_FILE=/run/secrets/passwords/mysql
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/passwords/mysql_root
+    volumes:
+      - /var/opt/bfi/iiif-load-balancer/mounts/mysql_data:/var/lib/mysql
+    secrets:
+      - source: mysql_root_password
+        target: passwords/mysql_root
+      - source: mysql_password
+        target: passwords/mysql
+
+secrets:
+  mysql_root_password:
+    file: /etc/opt/bfi/iiif-load-balancer/secrets/mysql_root_password
+  mysql_password:
+    file: /etc/opt/bfi/iiif-load-balancer/secrets/mysql_password
+  bfi_iiif_root_ca_crt:
+    file: /etc/opt/bfi/iiif-load-balancer/ssl/bfi-iiif-root-ca.crt

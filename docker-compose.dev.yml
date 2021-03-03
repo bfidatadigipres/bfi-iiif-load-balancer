@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  nginxproxymanager:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - 80:80
+      - 81:81
+      - 443:443
+    environment:
+      - DB_MYSQL_NAME=nginxproxymanager
+      - DB_MYSQL_HOST=mysql
+      - DB_MYSQL_PORT=3306 # Required, even though it's the default MySQL port.
+      - DB_MYSQL_USER=nginxproxymanager
+      - DB_MYSQL_PASSWORD=password
+    volumes:
+      - nginxproxymanager_data:/data
+      - nginxproxymanager_letsencrypt:/etc/letsencrypt
+    secrets:
+      - source: bfi_iiif_root_ca_crt
+        target: ssl/bfi-iiif-root-ca.crt
+  mysql:
+    image: mysql:5.7.33
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_DATABASE=nginxproxymanager
+      - MYSQL_USER=nginxproxymanager
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=password
+    volumes:
+    - mysql_data:/var/lib/mysql
+  backend_1:
+    image: karthequian/helloworld:black
+  backend_2:
+    image: karthequian/helloworld:blue
+
+volumes:
+  nginxproxymanager_data:
+  nginxproxymanager_letsencrypt:
+  mysql_data:
+
+secrets:
+  bfi_iiif_root_ca_crt:
+    file: ssl/bfi-iiif-root-ca.crt
