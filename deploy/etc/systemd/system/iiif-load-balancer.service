@@ -4,12 +4,10 @@ Description=IIIF Load Balancer Service
 After=docker.service
 
 [Service]
-Type=oneshot
+Type=simple
 RemainAfterExit=yes
-StandardError=null
-StandardOutput=null
 WorkingDirectory=/opt/bfi/iiif-load-balancer
-ExecStart=/usr/local/bin/docker-compose --file /opt/bfi/iiif-load-balancer/docker-compose.yml --env-file /etc/opt/bfi/iiif-load-balancer/config.env up -d --remove-orphans
+ExecStart=/usr/local/bin/docker-compose --file /opt/bfi/iiif-load-balancer/docker-compose.yml --env-file /etc/opt/bfi/iiif-load-balancer/config.env up --remove-orphans --abort-on-container-exit --no-color
 ExecStop=/usr/local/bin/docker-compose --file /opt/bfi/iiif-load-balancer/docker-compose.yml --env-file /etc/opt/bfi/iiif-load-balancer/config.env down
 
 [Install]
