@@ -24,6 +24,5 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/bfidatadigipres/bfi-iiif-load-balancer:latest
             ghcr.io/bfidatadigipres/bfi-iiif-load-balancer:${{ env.normalized_branch_name }}
             ghcr.io/bfidatadigipres/bfi-iiif-load-balancer:${{ github.sha }}
