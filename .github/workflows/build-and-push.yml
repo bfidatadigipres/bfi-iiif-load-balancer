@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Extract branch name
-        run: echo "normalized_branch_name=$(stripped=${GITHUB_REF#refs/heads/} && stripped=${GITHUB_REF#refs/tags/} && echo ${stripped/\//-})" >> $GITHUB_ENV
+        run: echo "normalized_branch_name=$(stripped=${GITHUB_REF#refs/heads/} && stripped=${stripped#refs/tags/} && echo ${stripped/\//-})" >> $GITHUB_ENV
       - name: Checkout the repo
         uses: actions/checkout@v2
       - name: Set up the Python environment
