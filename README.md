@@ -1,7 +1,5 @@
 # BFI - IIIF Load Balancer
 
-[![build](https://github.com/bfidatadigipres/bfi-iiif-load-balancer/actions/workflows/build-and-push.yml/badge.svg)](https://github.com/bfidatadigipres/bfi-iiif-load-balancer/actions/workflows/build-and-push.yml)
-
 This project introduces a load balancer appliance for use with BFI's
 IIIF services.
 
@@ -80,6 +78,8 @@ git secret hide
 ```
 
 ### Building
+
+[![build](https://github.com/bfidatadigipres/bfi-iiif-load-balancer/actions/workflows/build-and-push.yml/badge.svg)](https://github.com/bfidatadigipres/bfi-iiif-load-balancer/actions/workflows/build-and-push.yml)
 
 The [`Dockerfile`](Dockerfile) can be built by executing:
 
@@ -182,6 +182,10 @@ systemctl start iiif-load-balancer
 
 The NGINX Proxy Manager instance can now be accessed on port `81`.
 
+## Contributors
+
+[![contributors](https://contrib.rocks/image?repo=bfidatadigipres/bfi-iiif-load-balancer)](https://github.com/bfidatadigipres/bfi-iiif-load-balancer/graphs/contributors)
+
 ## Versioning
 
 We use SemVer for versioning. For the versions available, see the [tags
@@ -189,5 +193,5 @@ on this repository](https://github.com/bfidatadigipres/bfi-iiif-load-balancer/ta
 
 ## License
 
-This project is licensed under the MIT License - see the
+This project is licensed under the MIT license - see the
 [`LICENSE`](LICENSE) file for details
