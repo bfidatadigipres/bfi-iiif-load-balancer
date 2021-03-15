@@ -79,7 +79,7 @@ git secret hide
 
 ### Building
 
-[![build](https://github.com/bfidatadigipres/bfi-iiif-load-balancer/actions/workflows/build-and-push.yml/badge.svg)](https://github.com/bfidatadigipres/bfi-iiif-load-balancer/actions/workflows/build-and-push.yml)
+[![build](https://github.com/bfidatadigipres/bfi-iiif-load-balancer/actions/workflows/build.yml/badge.svg)](https://github.com/bfidatadigipres/bfi-iiif-load-balancer/actions/workflows/build.yml)
 
 The [`Dockerfile`](Dockerfile) can be built by executing:
 
