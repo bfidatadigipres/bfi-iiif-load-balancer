@@ -1,5 +1,7 @@
 # BFI - IIIF Load Balancer
 
+## Introduction
+
 This project introduces a load balancer appliance for use with BFI's
 IIIF services.
 
