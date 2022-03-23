@@ -5,7 +5,7 @@ After=docker.service
 
 [Service]
 Type=simple
-RemainAfterExit=yes
+RemainAfterExit=no
 WorkingDirectory=/opt/bfi/iiif-load-balancer
 ExecStart=/usr/local/bin/docker-compose --file /opt/bfi/iiif-load-balancer/docker-compose.yml --env-file /etc/opt/bfi/iiif-load-balancer/config.env up --remove-orphans --abort-on-container-exit --no-color
 ExecStop=/usr/local/bin/docker-compose --file /opt/bfi/iiif-load-balancer/docker-compose.yml --env-file /etc/opt/bfi/iiif-load-balancer/config.env down
