@@ -2,6 +2,7 @@
 [Unit]
 Description=IIIF Load Balancer Service
 After=docker.service
+Restart=always
 
 [Service]
 Type=simple
